@@ -2,7 +2,7 @@ This jar file converts word files to csv files
 
 Kullanım : 
 
-Çift tıklayarak jar dosyasını çalıştırın. Üst tarafta bulunan browse butonu ile çevirmek istediğiniz word belgesini seçiniz. Daha sonra excel'e girip replace all "\n" , "æ" diyebilmek için "\n" karakterinin hangi karakter ile değiştirmek istediğinizi seçiniz. Test dosyasının Issue Key Prefix'ini yandaki boşluğa girdikten sonra Create .csv butonuna basabilirsiniz. Eğer alttaki browse butonundan oluşturalacak dosyaların file path'ini değiştirmediyseniz, word belgesi ile aynı yere duruma göre bir veya iki adet .csv dosyası oluşturulmuş olacaktır.
+Çift tıklayarak jar dosyasını çalıştırın. Üst tarafta bulunan browse butonu ile çevirmek istediğiniz word belgesini seçiniz. Daha sonra excel'e girip replace all "\n" , "æ" diyebilmek için "\n" karakterinin hangi karakter ile değiştirmek istediğinizi seçiniz. Test dosyasının Issue Key Prefix'ini yandaki boşluğa girdikten sonra Create .csv butonuna basabilirsiniz. Eğer alttaki browse butonundan oluşturalacak dosyaların file path'ini değiştirmediyseniz, word belgesi ile aynı yere duruma göre bir veya iki adet .csv dosyası oluşturulmuş olacaktır. Sağ üstteki çarpı butonuna bastığınız zaman 3 adet seçenek karşınıza çıkacaktır. Bunlardan exit direk uygulamayı kapatır, save&exit browse butonundan seçtiğiniz directory'i kaydederek sonraki kullanımda o directory'den başlayacak şekilde uygulamayı kapatacaktır. Cancel seçeneği uygulamayı kapatmayacaktır. Clear all butonu kaydedilen directory'leri temizler. Close butonu directoryleri kaydederek uygulamayı sonlandırır.
 
 Handle edilmemiş exceptionlar:
 
