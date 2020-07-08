@@ -1,6 +1,7 @@
 This jar file converts word files to csv files 
 
 Handle edilmemiş exceptionlar:
+
 1- 4. Bölüm içerisinde, "Test Girdileri", "Varsayımlar ve Kısıtlamalar", "Ön Koşullar" ifadelerinin tek başına yer alması. (Metin içerisinde geçebilir.)
 
 2- Dökümanın herhangi bir yerinde "Test Adımları" ifadesinin tek başına yer alması. (Metin içerisinde geçebilir.)
