@@ -85,3 +85,5 @@ Bu durumda .csv belgesinde "Summary_Trimmed_Label" sütununun altında "Summary_
 Şeklinde sütunları olan bir tablonun dökümanın farklı yerlerde geçmesi durumunda tablonun daha sonra Jira'ya visual mod kullanılarak eklenmesi gerekir.
 
 ***7-***	Issue key "|" işaretleri arasına alınmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.
+
+***8-*** Dökümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.
