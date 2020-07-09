@@ -2,6 +2,7 @@
 Bu uygulama HVL-TEMP-TPr şablonunun 4. Bölümü altında verilen TEST’leri JİRA’da güncelleme/yaratma işlemlerini yapabilecek .csv dosyalarını oluşturmak üzere geliştirilmiştir.
 
 ***Kullanım***
+
 1-Çift tıklayarak jar dosyasını çalıştırın. 
 
 2-Üst tarafta bulunan browse butonu ile csv dosyasına çevirmek istediğiniz word belgesini seçiniz.
