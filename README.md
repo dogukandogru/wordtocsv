@@ -1,7 +1,8 @@
+
 Bu uygulama HVL-TEMP-TPr şablonunun 4. Bölümü altında verilen TEST’leri JİRA’da güncelleme/yaratma işlemlerini yapabilecek .csv dosyalarını oluşturmak üzere geliştirilmiştir.
 Bu uygulamanın mevcut sürümü kapsamında “Handle” edilemeyen “Exception”lar aşağıdaki gibidir;
 
-1- 1-	4. Bölüm kapsamında BAŞLIK olmayan yerlerde , "Test Girdileri", "Varsayımlar ve Kısıtlamalar", "Ön Koşullar", “Test Adımları” ifadelerinin tek başına yer alması. 
+***1-***	4. Bölüm kapsamında BAŞLIK olmayan yerlerde , "Test Girdileri", "Varsayımlar ve Kısıtlamalar", "Ön Koşullar", “Test Adımları” ifadelerinin tek başına yer alması. 
 
 Örn:
 
@@ -33,37 +34,30 @@ Test Adımları
 Ön Koşullar
 
 
-2-	Test Adımları bölümünün 32760 karakterden uzun olması.
+***2-***	Test Adımları bölümünün 32760 karakterden uzun olması.
 
 Bu durumda .csv belgesinde "Manuel_Test_Step_Import_Needed_Label" sütununun altında "Manuel_Test_Step_Import_Needed_Label_Needed" ifadesi belirecektir.
 
-3-	Summary kısmının 255 karakterden uzun olması. 
+***3-***	Summary kısmının 255 karakterden uzun olması. 
 
 Bu durumda .csv belgesinde "Summary_Trimmed_Label" sütununun altında "Summary_Trimmed" ifadesi belirecektir.
 
-4-	Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.
+***4-***	Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.
 
-6-  Test "test adımları" kısmı dışında tablo bulunması durumunda "OLE_Objects_Needs_Manuel_Processing_Label" sütununun altında "OLE_Objects_Needs_Manuel_Processing_Needed" ifadesi belirecektir. 
+***5-*** Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix'i ile başlaması
+
+ÖRN : 
+4.1 TBGTH Test Adımları (Exception Çıkaracaktır.)
+4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)
+
+***6-***  Test "test adımları" kısmı dışında tablo bulunması durumunda "OLE_Objects_Needs_Manuel_Processing_Label" sütununun altında "OLE_Objects_Needs_Manuel_Processing_Needed" ifadesi belirecektir. 
 
 (Bu tabloda test adımlarında yer alan sütunların birebir aynı sıra ve yazılarda yer almaması gerekmektedir.)
 
 ÖRN:
 
 | **Adım No** | **Test Adımı** | **Beklenen Test Sonuçları** | **Açıklamalar** | **Sonuç** | **Gereksinim No** |
-| --- | --- | --- | --- | --- | --- |
-| **G/K/UD \*** |
-| 1 | … işlemi yapılır | …. Sonucu alınır. |
-|
-| SSS-54 |
-| --- | --- | --- | --- | --- | --- |
-| 2 |
-| A | B | C |
-| --- | --- | --- |
-|
-|
-|
-|
-|
-|
-|
-|
+
+Şeklinde sütunları olan bir tablonun dökümanın farklı yerlerde geçmesi durumunda tablonun daha sonra Jira'ya visual mod kullanılarak eklenmesi gerekir.
+
+***7-***	Issue key "|" işaretleri arasına alınmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.
