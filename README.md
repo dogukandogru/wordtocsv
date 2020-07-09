@@ -51,7 +51,7 @@ Bu durumda .csv belgesinde "Summary_Trimmed_Label" sütununun altında "Summary_
 
 | **Adım No** | **Test Adımı** | **Beklenen Test Sonuçları** | **Açıklamalar** | **Sonuç** | **Gereksinim No** |
 | --- | --- | --- | --- | --- | --- |
-| **G/K/UD \*** |
+
 | 1 | … işlemi yapılır | …. Sonucu alınır. |
  |
  | SSS-54 |
