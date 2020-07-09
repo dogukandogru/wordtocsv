@@ -1,5 +1,29 @@
 
 Bu uygulama HVL-TEMP-TPr şablonunun 4. Bölümü altında verilen TEST’leri JİRA’da güncelleme/yaratma işlemlerini yapabilecek .csv dosyalarını oluşturmak üzere geliştirilmiştir.
+
+***Kullanım***
+1-Çift tıklayarak jar dosyasını çalıştırın. 
+
+2-Üst tarafta bulunan browse butonu ile csv dosyasına çevirmek istediğiniz word belgesini seçiniz.
+
+3-Daha sonra bir alt sütundan dökümanın içerisinde geçen "\n" karakterini değiştirmek istediğiniz karakteri girin (Nedeni ise "\n" karakterinin .csv dosyalarına yazılırken sütunların hizasını bozması).
+
+4-Sağ taraftan çevireceğiniz test belgesinin Issue Key Prefix'ini giriniz. (Örn: TBGTH,KRBN)
+
+5-Daha sonra csv dosyasının oluşturulacağı klasörü seçiniz. Eğer seçim yapılmaz ise word belgesinin olduğu konuma oluşturulacaktır.
+
+6- Create .csv butonu ile csv dönüştürme işlemini başlatabilirsiniz.
+
+7- Jar dosyasının dönüştürdüğünüz dosyanın bulunduğu klasörü kaydetmesini isterseniz uygulamayı kapatırken Close butonu ile kapatınız. Bu hem docx dosyasının hemde csv dosyasının directory'lerini kaydedecektir.
+
+8- Bu directory'lerin temizlenmesi için Clear All butonunu kullanabilirsiniz.
+
+(Directory'ler default olarak Windows'un Downloads kısmı olarak belirlenmiştir.)
+
+9- Sağ üstteki çarpı butonu ile karşınıza 3 seçenek çıkacaktır. Bunlardan exit direk uygulamayı kapatır, Save&Exit docx ve csv dosyasının directory'lerini kaydederek sonraki kullanımda o directory'den başlayacak şekilde uygulamayı kapatacaktır. Cancel seçeneği uygulamayı kapatmayacaktır.
+
+
+
 Bu uygulamanın mevcut sürümü kapsamında “Handle” edilemeyen “Exception”lar aşağıdaki gibidir;
 
 ***1-***	4. Bölüm kapsamında BAŞLIK olmayan yerlerde , "Test Girdileri", "Varsayımlar ve Kısıtlamalar", "Ön Koşullar", “Test Adımları” ifadelerinin tek başına yer alması. 
