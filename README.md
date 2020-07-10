@@ -1,90 +1,71 @@
+Bu uygulama HVL-TEMP-TPr şablonunun 4. Bölümü altında verilen TEST&#39;leri JİRA&#39;da güncelleme/yaratma işlemlerini yapabilecek .csv dosyalarını oluşturmak üzere geliştirilmiştir.
 
-Bu uygulama HVL-TEMP-TPr şablonunun 4. Bölümü altında verilen TEST’leri JİRA’da güncelleme/yaratma işlemlerini yapabilecek .csv dosyalarını oluşturmak üzere geliştirilmiştir.
+**_Kullanım_**
 
-***Kullanım***
+1. Çift tıklayarak jar dosyasını çalıştırınız.
+2. &quot;Select TPr to be converted] için [browse] butonuna tıklayarak, csv dosyasına çevirmek istediğiniz Word (.docx) belgesini seçiniz.
+3. &quot;Replace &quot;paragraph&quot; character (\n) with&quot; yanındaki seçeneklerden, dokümanın içerisinde geçen &quot;\n&quot; karakterini değiştirmek istediğiniz karakteri seçiniz.
 
-1-Çift tıklayarak jar dosyasını çalıştırın. 
+Not: Bu seçimi yaparken dokümanın içinde zaten olması gereken bir karakteri tercih etmeyiniz. Jira&#39;ya import sonrasında \n yerine kullanılanlar ile normalde olması gerekenleri ayırt etmeniz zorlaşabilir.
 
-2-Üst tarafta bulunan browse butonu ile csv dosyasına çevirmek istediğiniz word belgesini seçiniz.
+1. &quot;Please Set Issue Key Prefix&quot;&#39;den, Jira&#39;daki Issue Key&#39;lerin prefix&#39;ini giriniz. (Örn: TBGTH,KRBN)
+2. .csv dosyasının oluşturulacağı klasörü seçiniz.
 
-3-Daha sonra bir alt sütundan dökümanın içerisinde geçen "\n" karakterini değiştirmek istediğiniz karakteri girin (Nedeni ise "\n" karakterinin .csv dosyalarına yazılırken sütunların hizasını bozması).
+Not: Herhangi bir seçim yapılmaz ise word belgesinin olduğu konuma oluşturulacaktır.
 
-4-Sağ taraftan çevireceğiniz test belgesinin Issue Key Prefix'ini giriniz. (Örn: TBGTH,KRBN)
+1. Create .csv butonu ile csv dönüştürme işlemini başlatabilirsiniz.
+2. Uygulamanın bir sonraki açılışında &quot;browse&quot; butonları ile yaptığını seçimlere göre açılmasını isterseniz &quot;close&quot; butonu ile çıkış yapınız.
+3. &quot;browse&quot; ile yaptığını seçimlerin &quot;default&quot; konumlara dönmesi için &quot;Clear All&quot; butonunu kullanabilirsiniz.
 
-5-Daha sonra csv dosyasının oluşturulacağı klasörü seçiniz. Eğer seçim yapılmaz ise word belgesinin olduğu konuma oluşturulacaktır.
+Not: &quot;Default&quot; &quot;directory&quot;ler, &quot;Windows&quot;un ilgili kullanıcıya ait &quot;Downloads&quot; alanlarıdır.
 
-6- Create .csv butonu ile csv dönüştürme işlemini başlatabilirsiniz.
+1. Sağ üstteki çarpı butonu ile karşınıza 3 seçenek çıkacaktır.
+  1. Exit: direk uygulamayı kapatır,
+  2. Save&amp;Exit docx ve csv dosyasının directory&#39;lerini kaydederek sonraki kullanımda o directory&#39;den başlayacak şekilde uygulamayı kapatacaktır.
+  3. Cancel seçeneği uygulamayı kapatmayacaktır.
+2. Uygulama dooğru formattaki bir Word dosyası ile çalıştırıldığında &quot;abc.docx&quot; dosyası için
+  1. abc\_TBU.csv
+  2. abc\_TBC.csv şeklinde iki adet &quot;;&quot; ile &quot;seperate&quot; edilmiş CSV oluşturacaktır.
 
-7- Jar dosyasının dönüştürdüğünüz dosyanın bulunduğu klasörü kaydetmesini isterseniz uygulamayı kapatırken Close butonu ile kapatınız. Bu hem docx dosyasının hemde csv dosyasının directory'lerini kaydedecektir.
+**abc\_TBU.csv** dosyasındaki &quot;TEST&quot;lerin daha önce JİRA&#39;da bulundukları ve Word ortamında güncellendikten sonra ADMİN yetkileri ile JİRA&#39;da (U)pdate amacı ile kullanılacağı varsayılmaktadır.
 
-8- Bu directory'lerin temizlenmesi için Clear All butonunu kullanabilirsiniz.
+**abc\_TBC.csv** dosyasındaki &quot;TEST&quot;lerin daha önce JİRA&#39;da olmayan, Word dosyası üzerindeki çalışmalar sırasında oluşturulan &quot;TEST&quot;ler oldukları varsayılmaktadır. Bunlar Normal kullanıcı yetkileri ile JİRA&#39;da (C)reate edilebilmektedir.
 
-(Directory'ler default olarak Windows'un Downloads kısmı olarak belirlenmiştir.)
+Bu uygulamanın mevcut sürümü kapsamında &quot;Handle&quot; edilemeyen &quot;Exception&quot;lar aşağıdaki gibidir;
 
-9- Sağ üstteki çarpı butonu ile karşınıza 3 seçenek çıkacaktır. Bunlardan exit direk uygulamayı kapatır, Save&Exit docx ve csv dosyasının directory'lerini kaydederek sonraki kullanımda o directory'den başlayacak şekilde uygulamayı kapatacaktır. Cancel seçeneği uygulamayı kapatmayacaktır.
-
-
-
-Bu uygulamanın mevcut sürümü kapsamında “Handle” edilemeyen “Exception”lar aşağıdaki gibidir;
-
-***1-***	4. Bölüm kapsamında BAŞLIK olmayan yerlerde , "Test Girdileri", "Varsayımlar ve Kısıtlamalar", "Ön Koşullar", “Test Adımları” ifadelerinin tek başına yer alması. 
+1. Issue key &quot;|&quot; işaretleri arasına olmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.
+2. Uygulama Word dosyasındaki halihazırda kullanılan bütün &quot;;&quot; işaretlerini &quot;:&quot; ile &quot;replace&quot; etmektedir, çünkü &quot;delimiter&quot; olarak &quot;;&quot; kullanılması gerekmektedir.
+3. 4. Bölüm kapsamında BAŞLIK olmayan yerlerde , &quot;Test Girdileri&quot;, &quot;Varsayımlar ve Kısıtlamalar&quot;, &quot;Ön Koşullar&quot;, &quot;Test Adımları&quot; ifadelerinin tek başına yer alması.
 
 Örn:
 
-4.1	Geçici Kabul Gözle Muayene
-4.1.1	|PROJE-0001| – Gözle Kontroller
-4.1.1.1	Ön Koşullar
-Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir.
-4.1.1.2	Test Girdileri
-Test Başlangıç Tarihi-Saati:
-Test Bitiş Tarihi-Saati:
-Yüklenici Temsilcisi:
-Müşteri Temsilcisi: 
-Detaylı Test Girdileri, Test Adımları’nda verilmiştir.
-4.1.1.3	Varsayımlar ve Kısıtlamalar
-Ön Koşullar’daki ihtiyaçların karşılanacağı varsayılmaktadır.
-Bahse konu test sahada devam eden operasyonu etkilemeyecek şekilde koşulması sağlanacaktır.
+4.1 Geçici Kabul Gözle Muayene 4.1.1 |PROJE-0001| – Gözle Kontroller 4.1.1.1 Ön Koşullar Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir. 4.1.1.2 Test Girdileri Test Başlangıç Tarihi-Saati: Test Bitiş Tarihi-Saati: Yüklenici Temsilcisi: Müşteri Temsilcisi: Detaylı Test Girdileri, Test Adımları&#39;nda verilmiştir. 4.1.1.3 Varsayımlar ve Kısıtlamalar Ön Koşullar&#39;daki ihtiyaçların karşılanacağı varsayılmaktadır. Bahse konu test sahada devam eden operasyonu etkilemeyecek şekilde koşulması sağlanacaktır.
 
-Yukarıda;
-Varsayımlar ve Kısıtlamalar başlığı altında geçen “Ön Koşullar’daki ….” ifadesi Test Girdileri başlığı altında geçen “Detaylı Test Girdileri, Test Adımları’nda verilmiştir” ifadesi Sorun yaratmazken, aşağıdaki örnekte görülen; 
-Herhangi bir başlığın altında yanlışlıkla yanına bir şey yazılmadan bırakılmış “Ön Koşullar”, “Test Adımları” ifadeleri .csv’de sorun yaratacaktır.
+Yukarıda; Varsayımlar ve Kısıtlamalar başlığı altında geçen &quot;Ön Koşullar&#39;daki ….&quot; ifadesi Test Girdileri başlığı altında geçen &quot;Detaylı Test Girdileri, Test Adımları&#39;nda verilmiştir&quot; ifadesi Sorun yaratmazken, aşağıdaki örnekte görülen; Herhangi bir başlığın altında yanlışlıkla yanına bir şey yazılmadan bırakılmış &quot;Ön Koşullar&quot;, &quot;Test Adımları&quot; ifadeleri .csv&#39;de sorun yaratacaktır.
 
-4.2	Geçici Kabul Gözle Muayene
-4.2.1	|PROJE-0001| – Gözle Kontroller
-4.2.1.1	Ön Koşullar
-Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir.
-4.2.1.2	Test Girdileri
-Test Adımları
-4.2.1.3	Varsayımlar ve Kısıtlamalar
-Ön Koşullar
+4.2 Geçici Kabul Gözle Muayene 4.2.1 |PROJE-0001| – Gözle Kontroller 4.2.1.1 Ön Koşullar Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir. 4.2.1.2 Test Girdileri Test Adımları 4.2.1.3 Varsayımlar ve Kısıtlamalar Ön Koşullar
 
+1. Test Adımları bölümünün 32760 karakterden uzun olması.
 
-***2-***	Test Adımları bölümünün 32760 karakterden uzun olması.
+Bu durumda .csv belgesinde &quot;Manuel\_Test\_Step\_Import\_Needed\_Label&quot; sütununun altında &quot;Manuel\_Test\_Step\_Import\_Needed\_Label\_Needed&quot; ifadesi belirecektir.
 
-Bu durumda .csv belgesinde "Manuel_Test_Step_Import_Needed_Label" sütununun altında "Manuel_Test_Step_Import_Needed_Label_Needed" ifadesi belirecektir.
+1. Summary kısmının 255 karakterden uzun olması.
 
-***3-***	Summary kısmının 255 karakterden uzun olması. 
+Bu durumda .csv belgesinde &quot;Summary\_Trimmed\_Label&quot; sütununun altında &quot;Summary\_Trimmed&quot; ifadesi belirecektir.
 
-Bu durumda .csv belgesinde "Summary_Trimmed_Label" sütununun altında "Summary_Trimmed" ifadesi belirecektir.
+1. Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.
+2. Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix&#39;i ile başlaması
 
-***4-***	Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.
+ÖRN : 4.1 TBGTH Test Adımları (Exception Çıkaracaktır.) 4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)
 
-***5-*** Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix'i ile başlaması
-
-ÖRN : 
-4.1 TBGTH Test Adımları (Exception Çıkaracaktır.)
-4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)
-
-***6-***  Test "test adımları" kısmı dışında tablo bulunması durumunda "OLE_Objects_Needs_Manuel_Processing_Label" sütununun altında "OLE_Objects_Needs_Manuel_Processing_Needed" ifadesi belirecektir. 
+1. Test &quot;test adımları&quot; kısmı dışında tablo bulunması durumunda &quot;OLE\_Objects\_Needs\_Manuel\_Processing\_Label&quot; sütununun altında &quot;OLE\_Objects\_Needs\_Manuel\_Processing\_Needed&quot; ifadesi belirecektir.
 
 (Bu tabloda test adımlarında yer alan sütunların birebir aynı sıra ve yazılarda yer almaması gerekmektedir.)
 
 ÖRN:
 
-| **Adım No** | **Test Adımı** | **Beklenen Test Sonuçları** | **Açıklamalar** | **Sonuç** | **Gereksinim No** |
+|  **Adım No**  |  **Test Adımı**  |  **Beklenen Test Sonuçları**  |  **Açıklamalar**  |  **Sonuç**  |  **Gereksinim No**  |
 
-Şeklinde sütunları olan bir tablonun dökümanın farklı yerlerde geçmesi durumunda tablonun daha sonra Jira'ya visual mod kullanılarak eklenmesi gerekir.
+Şeklinde sütunları olan bir tablonun dokümanın farklı yerlerde geçmesi durumunda tablonun WORD&#39;den silinmesi ve daha sonra Jira&#39;ya visual mod kullanılarak eklenmesi gerekir.
 
-***7-***	Issue key "|" işaretleri arasına alınmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.
-
-***8-*** Dökümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.
+1. Dokümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.
