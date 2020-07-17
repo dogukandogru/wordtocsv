@@ -113,3 +113,5 @@ Bu durumda .csv belgesinde &quot;Summary\_Trimmed\_Label&quot; sütununun altın
 Şeklinde sütunları olan bir tablonun dokümanın farklı yerlerde geçmesi durumunda tablonun WORD&#39;den silinmesi ve daha sonra Jira&#39;ya visual mod kullanılarak eklenmesi gerekir.
 
 1. Dokümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.
+
+10- Update edilecek testlerde ( |issue prefix-xxxx| - summary ), yeni oluşturulan testlerde ( Issue prefix - summary ) şeklinde girmek gereklidir.
