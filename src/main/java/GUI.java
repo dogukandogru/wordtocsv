@@ -41,40 +41,127 @@ public class GUI extends JFrame implements Runnable{
 
     // Text of exception list
     private static String getExceptionList(){
-        return "Bu uygulamanın mevcut sürümü kapsamında \"Handle\" edilemeyen \"Exception\"lar aşağıdaki gibidir;\n" +
+        return "Bu uygulamanın mevcut sürümünde WORD formatındaki TPR’nin “parse” edilmesiyle ilgili \"handle\" EDİLEMEYEN \"Exception\"lar aşağıdaki gibidir;\n" +
                 "\n" +
-                "1-  Issue key \"|\" işaretleri arasına olmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.\n" +
-                "2-  Uygulama Word dosyasındaki halihazırda kullanılan bütün \";\" işaretlerini \":\" ile \"replace\" etmektedir, çünkü \"delimiter\" olarak \";\" kullanılması gerekmektedir.\n" +
-                "3- IV. Bölüm kapsamında BAŞLIK olmayan yerlerde , \"Test Girdileri\", \"Varsayımlar ve Kısıtlamalar\", \"Ön Koşullar\", \"Test Adımları\" ifadelerinin tek başına yer alması.\n" +
+                " \n" +
+                "\n" +
+                "1-      Issue key \"|\" işaretleri arasına olmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.\n" +
+                "\n" +
+                "2-      Bir “Test”in, “Test” olduğunun anlaşılabilmesi için 4.X.X seviyesindeki başlığın “<issue prefix> - ” ile başlaması gerekmektedir. (tırnak işaretleri olmadan)\n" +
+                "\n" +
+                "a.       <issue prefix>, ilgili proje’nin Jira’daki kısaltması olmalıdır.\n" +
+                "\n" +
+                "b.       Uygulama’da da aynı <issue prefix> girilmesi gerekecektir.\n" +
+                "\n" +
+                "c.       <issue prefix> CASE SENSITIVE’dir.\n" +
+                "\n" +
+                "3-      Uygulama Word dosyasındaki halihazırda kullanılan bütün \";\" işaretlerini \":\" ile \"replace\" etmektedir, çünkü \"delimiter\" olarak \";\" kullanılması gerekmektedir.\n" +
+                "\n" +
+                "4-      IV. (4.) Bölüm kapsamında BAŞLIK olmayan yerlerde , \"Test Girdileri\", \"Varsayımlar ve Kısıtlamalar\", \"Ön Koşullar\", \"Test Adımları\" ifadelerinin tek başına yer almaması gerekmektedir.\n" +
+                "\n" +
                 "Örn:\n" +
                 "\n" +
-                "4.1 Geçici Kabul Gözle Muayene 4.1.1 |PROJE-0001| – Gözle Kontroller 4.1.1.1 Ön Koşullar Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir. 4.1.1.2 Test Girdileri Test Başlangıç Tarihi-Saati: Test Bitiş Tarihi-Saati: Yüklenici Temsilcisi: Müşteri Temsilcisi: Detaylı Test Girdileri, Test Adımları'nda verilmiştir. 4.1.1.3 Varsayımlar ve Kısıtlamalar Ön Koşullar'daki ihtiyaçların karşılanacağı varsayılmaktadır. Bahse konu test sahada devam eden operasyonu etkilemeyecek şekilde koşulması sağlanacaktır.\n" +
+                "4.1 Geçici Kabul Gözle Muayene\n" +
                 "\n" +
-                "Yukarıda; Varsayımlar ve Kısıtlamalar başlığı altında geçen \"Ön Koşullar'daki ….\" ifadesi Test Girdileri başlığı altında geçen \"Detaylı Test Girdileri, Test Adımları'nda verilmiştir\" ifadesi Sorun yaratmazken, aşağıdaki örnekte görülen; Herhangi bir başlığın altında yanlışlıkla yanına bir şey yazılmadan bırakılmış \"Ön Koşullar\", \"Test Adımları\" ifadeleri .csv'de sorun yaratacaktır.\n" +
+                "4.1.1 |PROJE-0001| – Gözle Kontroller\n" +
                 "\n" +
-                "4.2 Geçici Kabul Gözle Muayene 4.2.1 |PROJE-0001| – Gözle Kontroller 4.2.1.1 Ön Koşullar Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir. 4.2.1.2 Test Girdileri Test Adımları 4.2.1.3 Varsayımlar ve Kısıtlamalar Ön Koşullar\n" +
+                "4.1.1.1 Ön Koşullar\n" +
                 "\n" +
-                "4-  Test Adımları bölümünün 32760 karakterden uzun olması.\n" +
-                "Bu durumda .csv belgesinde \"Manuel_Test_Step_Import_Needed_Label\" sütununun altında \"Manuel_Test_Step_Import_Needed_Label_Needed\" ifadesi belirecektir.\n" +
+                "Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir.\n" +
                 "\n" +
-                "5- Summary kısmının 255 karakterden uzun olması.\n" +
+                "4.1.1.2 Test Girdileri\n" +
+                "\n" +
+                "Test Başlangıç Tarihi-Saati:\n" +
+                "\n" +
+                "Test Bitiş Tarihi-Saati:\n" +
+                "\n" +
+                "Yüklenici Temsilcisi:\n" +
+                "\n" +
+                "Müşteri Temsilcisi:\n" +
+                "\n" +
+                "Detaylı Test Girdileri, Test Adımları'nda verilmiştir.\n" +
+                "\n" +
+                "4.1.1.3 Varsayımlar ve Kısıtlamalar\n" +
+                "\n" +
+                "Ön Koşullar'daki ihtiyaçların karşılanacağı varsayılmaktadır. Bahse konu test sahada devam eden operasyonu etkilemeyecek şekilde koşulması sağlanacaktır.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Yukarıda; Varsayımlar ve Kısıtlamalar başlığı altında geçen \"Ön Koşullar'daki ….\" ifadesi Test Girdileri başlığı altında geçen \"Detaylı Test Girdileri, Test Adımları'nda verilmiştir\" ifadesi SORUN YARATMAZ.\n" +
+                "\n" +
+                "Fakat aşağıdaki örnekte görülen; Herhangi bir başlığın altında yanlışlıkla yanına bir şey yazılmadan bırakılmış \"Ön Koşullar\", \"Test Adımları\" ifadeleri .csv'de sorun yaratacaktır.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "4.2 Geçici Kabul Gözle Muayene\n" +
+                "\n" +
+                "4.2.1 |PROJE-0001| – Gözle Kontroller\n" +
+                "\n" +
+                "4.2.1.1 Ön Koşullar\n" +
+                "\n" +
+                "Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir.\n" +
+                "\n" +
+                "4.2.1.2 Test Girdileri\n" +
+                "\n" +
+                "Test Adımları\n" +
+                "\n" +
+                "4.2.1.3 Varsayımlar ve Kısıtlamalar\n" +
+                "\n" +
+                "Ön Koşullar\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "5-      Test Adımları bölümünün 32760 karakterden uzun olmaması gerekmektedir.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Dokümanda böyle bir durum varsa, bu karakter sayısına ulaşılan noktadan sonraki adımlar .csv’ye alınamamaktadır.\n" +
+                "\n" +
+                "Bu durumda .csv belgesinde \"Manuel_Test_Step_Import_Needed_Label\" sütununun altında \"Manuel_Test_Step_Import_Needed\" ifadesi belirecektir.\n" +
+                "\n" +
+                "Bu label’in görüldüğü testler Jira’ya eklendikten/güncellendikten sonra “Test” issue’sinin içinden Test Adımları import yöntemi kullanılarak eksik kalan adımlar Jira’ya aktarılabilir.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "6-      Summary kısmının 255 karakterden uzun olması.\n" +
+                "\n" +
+                "Dokümanda böyle bir durum varsa, Summary 255’inci karakterden sonra kesilerek .csv’ye alınmaktadır.\n" +
+                "\n" +
                 "Bu durumda .csv belgesinde \"Summary_Trimmed_Label\" sütununun altında \"Summary_Trimmed\" ifadesi belirecektir.\n" +
                 "\n" +
-                "6-  Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.\n" +
-                "7-  Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix'i ile başlaması\n" +
-                "ÖRN : 4.1 TBGTH Test Adımları (Exception Çıkaracaktır.) 4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)\n" +
+                " \n" +
                 "\n" +
-                "8-  Test \"test adımları\" kısmı dışında tablo bulunması durumunda \"OLE_Objects_Needs_Manuel_Processing_Label\" sütununun altında \"OLE_Objects_Needs_Manuel_Processing_Needed\" ifadesi belirecektir.\n" +
+                "7-      Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.\n" +
+                "\n" +
+                "8-      Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix'i ile başlaması\n" +
+                "\n" +
+                "ÖRN :\n" +
+                "\n" +
+                "4.1 TBGTH Test Adımları (Exception Çıkaracaktır.)\n" +
+                "\n" +
+                "4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "9-      Test \"test adımları\" kısmı dışında tablo bulunması durumunda \"OLE_Objects_Needs_Manuel_Processing_Label\" sütununun altında \"OLE_Objects_Needs_Manuel_Processing_Needed\" ifadesi belirecektir.\n" +
+                "\n" +
                 "(Bu tabloda test adımlarında yer alan sütunların birebir aynı sıra ve yazılarda yer almaması gerekmektedir.)\n" +
+                "\n" +
+                " \n" +
                 "\n" +
                 "ÖRN:\n" +
                 "\n" +
+                " \n" +
+                "\n" +
                 "| Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklamalar | Sonuç | Gereksinim No |\n" +
                 "\n" +
-                "Şeklinde sütunları olan bir tablonun dokümanın farklı yerlerde geçmesi durumunda tablonun WORD'den silinmesi ve daha sonra Jira'ya visual mod kullanılarak eklenmesi gerekir.\n" +
+                " \n" +
                 "\n" +
-                "9-  Dokümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.\n"+
-                "10- Update edilecek testlerde ( |issue prefix-xxxx| - summary ), yeni oluşturulan testlerde ( Issue prefix - summary ) şeklinde girmek gereklidir.";
+                "Şeklinde sütunları olan bir tablonun dokümanın farklı yerlerinde geçmesi durumunda tablonun WORD'den silinmesi ve daha sonra Jira'ya visual mod kullanılarak eklenmesi gerekir.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "10-   Dokümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.";
     }
 
     //Exception menu
