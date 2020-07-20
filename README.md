@@ -75,43 +75,125 @@ Not: &quot;Default&quot; &quot;directory&quot;ler, &quot;Windows&quot;un ilgili 
   2. Save&amp;Exit docx ve csv dosyasının directory&#39;lerini kaydederek sonraki kullanımda o directory&#39;den başlayacak şekilde uygulamayı kapatacaktır.
   3. Cancel seçeneği uygulamayı kapatmayacaktır.
 
-Bu uygulamanın mevcut sürümü kapsamında &quot;Handle&quot; edilemeyen &quot;Exception&quot;lar aşağıdaki gibidir;
 
-1. Issue key &quot;|&quot; işaretleri arasına olmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.
-2. Uygulama Word dosyasındaki halihazırda kullanılan bütün &quot;;&quot; işaretlerini &quot;:&quot; ile &quot;replace&quot; etmektedir, çünkü &quot;delimiter&quot; olarak &quot;;&quot; kullanılması gerekmektedir.
-3. 4. Bölüm kapsamında BAŞLIK olmayan yerlerde , &quot;Test Girdileri&quot;, &quot;Varsayımlar ve Kısıtlamalar&quot;, &quot;Ön Koşullar&quot;, &quot;Test Adımları&quot; ifadelerinin tek başına yer alması.
+**Bu uygulamanın mevcut sürümünde WORD formatındaki TPR’nin “parse” edilmesiyle ilgili "handle" EDİLEMEYEN "Exception"lar aşağıdaki gibidir;**
+
+ 
+
+**1**-Issue key "|" işaretleri arasına olmalıdır. Aksi takdirde bu testler yeni oluşturulmuş varsayılacaktır.
+
+**2**-Bir “Test”in, “Test” olduğunun anlaşılabilmesi için 4.X.X seviyesindeki başlığın “<issue prefix> - ” ile başlaması gerekmektedir. (tırnak işaretleri olmadan)
+
+a.       <issue prefix>, ilgili proje’nin Jira’daki kısaltması olmalıdır.
+
+b.       Uygulama’da da aynı <issue prefix> girilmesi gerekecektir.
+
+c.       <issue prefix> CASE SENSITIVE’dir.
+
+**3**-      Uygulama Word dosyasındaki halihazırda kullanılan bütün ";" işaretlerini ":" ile "replace" etmektedir, çünkü "delimiter" olarak ";" kullanılması gerekmektedir.
+
+**4**-      IV. (4.) Bölüm kapsamında BAŞLIK olmayan yerlerde , "Test Girdileri", "Varsayımlar ve Kısıtlamalar", "Ön Koşullar", "Test Adımları" ifadelerinin tek başına yer almaması gerekmektedir.
 
 Örn:
 
-4.1 Geçici Kabul Gözle Muayene 4.1.1 |PROJE-0001| – Gözle Kontroller 4.1.1.1 Ön Koşullar Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir. 4.1.1.2 Test Girdileri Test Başlangıç Tarihi-Saati: Test Bitiş Tarihi-Saati: Yüklenici Temsilcisi: Müşteri Temsilcisi: Detaylı Test Girdileri, Test Adımları&#39;nda verilmiştir. 4.1.1.3 Varsayımlar ve Kısıtlamalar Ön Koşullar&#39;daki ihtiyaçların karşılanacağı varsayılmaktadır. Bahse konu test sahada devam eden operasyonu etkilemeyecek şekilde koşulması sağlanacaktır.
+4.1 Geçici Kabul Gözle Muayene
 
-Yukarıda; Varsayımlar ve Kısıtlamalar başlığı altında geçen &quot;Ön Koşullar&#39;daki ….&quot; ifadesi Test Girdileri başlığı altında geçen &quot;Detaylı Test Girdileri, Test Adımları&#39;nda verilmiştir&quot; ifadesi Sorun yaratmazken, aşağıdaki örnekte görülen; Herhangi bir başlığın altında yanlışlıkla yanına bir şey yazılmadan bırakılmış &quot;Ön Koşullar&quot;, &quot;Test Adımları&quot; ifadeleri .csv&#39;de sorun yaratacaktır.
+4.1.1 |PROJE-0001| – Gözle Kontroller
 
-4.2 Geçici Kabul Gözle Muayene 4.2.1 |PROJE-0001| – Gözle Kontroller 4.2.1.1 Ön Koşullar Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir. 4.2.1.2 Test Girdileri Test Adımları 4.2.1.3 Varsayımlar ve Kısıtlamalar Ön Koşullar
+4.1.1.1 Ön Koşullar
 
-1. Test Adımları bölümünün 32760 karakterden uzun olması.
+Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir.
 
-Bu durumda .csv belgesinde &quot;Manuel\_Test\_Step\_Import\_Needed\_Label&quot; sütununun altında &quot;Manuel\_Test\_Step\_Import\_Needed\_Label\_Needed&quot; ifadesi belirecektir.
+4.1.1.2 Test Girdileri
 
-1. Summary kısmının 255 karakterden uzun olması.
+Test Başlangıç Tarihi-Saati:
 
-Bu durumda .csv belgesinde &quot;Summary\_Trimmed\_Label&quot; sütununun altında &quot;Summary\_Trimmed&quot; ifadesi belirecektir.
+Test Bitiş Tarihi-Saati:
 
-1. Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.
-2. Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix&#39;i ile başlaması
+Yüklenici Temsilcisi:
 
-ÖRN : 4.1 TBGTH Test Adımları (Exception Çıkaracaktır.) 4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)
+Müşteri Temsilcisi:
 
-1. Test &quot;test adımları&quot; kısmı dışında tablo bulunması durumunda &quot;OLE\_Objects\_Needs\_Manuel\_Processing\_Label&quot; sütununun altında &quot;OLE\_Objects\_Needs\_Manuel\_Processing\_Needed&quot; ifadesi belirecektir.
+Detaylı Test Girdileri, Test Adımları'nda verilmiştir.
+
+4.1.1.3 Varsayımlar ve Kısıtlamalar
+
+Ön Koşullar'daki ihtiyaçların karşılanacağı varsayılmaktadır. Bahse konu test sahada devam eden operasyonu etkilemeyecek şekilde koşulması sağlanacaktır.
+
+ 
+
+Yukarıda; Varsayımlar ve Kısıtlamalar başlığı altında geçen "Ön Koşullar'daki …." ifadesi Test Girdileri başlığı altında geçen "Detaylı Test Girdileri, Test Adımları'nda verilmiştir" ifadesi SORUN YARATMAZ.
+
+Fakat aşağıdaki örnekte görülen; Herhangi bir başlığın altında yanlışlıkla yanına bir şey yazılmadan bırakılmış "Ön Koşullar", "Test Adımları" ifadeleri .csv'de sorun yaratacaktır.
+
+ 
+
+4.2 Geçici Kabul Gözle Muayene
+
+4.2.1 |PROJE-0001| – Gözle Kontroller
+
+4.2.1.1 Ön Koşullar
+
+Gözle kontrol edilecek cihazların ilgili sahalarda kurulumlarının tamamlanmış olması gerekmektedir.
+
+4.2.1.2 Test Girdileri
+
+Test Adımları
+
+4.2.1.3 Varsayımlar ve Kısıtlamalar
+
+Ön Koşullar
+
+ 
+
+**5**-      Test Adımları bölümünün 32760 karakterden uzun olmaması gerekmektedir.
+
+ 
+
+Dokümanda böyle bir durum varsa, bu karakter sayısına ulaşılan noktadan sonraki adımlar .csv’ye alınamamaktadır.
+
+Bu durumda .csv belgesinde "Manuel_Test_Step_Import_Needed_Label" sütununun altında "Manuel_Test_Step_Import_Needed" ifadesi belirecektir.
+
+Bu label’in görüldüğü testler Jira’ya eklendikten/güncellendikten sonra “Test” issue’sinin içinden Test Adımları import yöntemi kullanılarak eksik kalan adımlar Jira’ya aktarılabilir.
+
+ 
+
+**6**-      Summary kısmının 255 karakterden uzun olması.
+
+Dokümanda böyle bir durum varsa, Summary 255’inci karakterden sonra kesilerek .csv’ye alınmaktadır.
+
+Bu durumda .csv belgesinde "Summary_Trimmed_Label" sütununun altında "Summary_Trimmed" ifadesi belirecektir.
+
+ 
+
+**7**-      Test açıklamaları başlamadan önce 4. TEST AÇIKLAMALARI başlığı mutlaka olmalıdır.
+
+**8**-      Test aralarında testleri konu başlıklarına bölen kısımların issue key prefix'i ile başlaması
+
+ÖRN :
+
+4.1 TBGTH Test Adımları (Exception Çıkaracaktır.)
+
+4.1 Test Adımları TBGTH (Exception Çıkarmayacaktır.)
+
+ 
+
+**9**-      Test "test adımları" kısmı dışında tablo bulunması durumunda "OLE_Objects_Needs_Manuel_Processing_Label" sütununun altında "OLE_Objects_Needs_Manuel_Processing_Needed" ifadesi belirecektir.
 
 (Bu tabloda test adımlarında yer alan sütunların birebir aynı sıra ve yazılarda yer almaması gerekmektedir.)
 
+ 
+
 ÖRN:
 
-|  **Adım No**  |  **Test Adımı**  |  **Beklenen Test Sonuçları**  |  **Açıklamalar**  |  **Sonuç**  |  **Gereksinim No**  |
+ 
 
-Şeklinde sütunları olan bir tablonun dokümanın farklı yerlerde geçmesi durumunda tablonun WORD&#39;den silinmesi ve daha sonra Jira&#39;ya visual mod kullanılarak eklenmesi gerekir.
+| Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklamalar | Sonuç | Gereksinim No |
 
-1. Dokümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.
+ 
 
-10- Update edilecek testlerde ( |issue prefix-xxxx| - summary ), yeni oluşturulan testlerde ( Issue prefix - summary ) şeklinde girmek gereklidir.
+Şeklinde sütunları olan bir tablonun dokümanın farklı yerlerinde geçmesi durumunda tablonun WORD'den silinmesi ve daha sonra Jira'ya visual mod kullanılarak eklenmesi gerekir.
+
+ 
+
+**10**-   Dokümanın herhangi bir yerinde bir resim kullanılması durumunda resim yok sayılarak parse işlemi devam edecektir. Fakat resimlerin yok sayıldığı bilgisi henüz excel dosyasında belirtilememektedir.
