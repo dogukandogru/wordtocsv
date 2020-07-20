@@ -663,7 +663,13 @@ class WordToCSV {
 
 
                 if(length < 0)
-                    length = checkpoints[i] - checkpoints[i-1];
+                    try{
+                        length = checkpoints[i] - checkpoints[i-1];
+                    }
+                    catch (ArrayIndexOutOfBoundsException e){
+                        length = checkpoints[i];
+                    }
+
 
                 //unlock this when debugging
                 /*ArrayList<String> list = new ArrayList<>();
