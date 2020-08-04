@@ -4,6 +4,10 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.prefs.*;
 
 
@@ -454,6 +458,7 @@ public class GUI extends JFrame implements Runnable{
 
         //Setting fileDialogs as Downloads folder
         fileDialog.setDirectory("C:\\Users\\"+username+"\\Downloads");
+        fileDialog.setMultipleMode(true);
         saveFileDialog.setDirectory("C:\\Users\\"+username+"\\Downloads");
 
         //fileChooser.setCurrentDirectory(new File("C:\\Users\\"+username+"\\Downloads"));
@@ -679,7 +684,6 @@ public class GUI extends JFrame implements Runnable{
         createCsv.setBounds(750,420,100,50);
         createCsv.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 String notificationText="";
                 String filePath = filePathLabel.getText();
                 String saveFilePath = saveFilePathLabel.getText();
@@ -717,6 +721,14 @@ public class GUI extends JFrame implements Runnable{
                     else if(isTBCExist)  alertString = "TBC file is exist.";
                     else alertString = "";
                     String issueKeyPrefix = issueKeyPrefixLabel.getText();
+
+                    File[] fileNames = fileDialog.getFiles();
+                    if(fileNames.length > 1){
+                        generateMultipleFiles(fileNames,c,issueKeyPrefix);
+                        return;
+                    }
+
+
                     if(issueKeyPrefix.equals("") && convertType.equals("Word")){
                         notificationText = "Please set issue key prefix.";
                         return;
@@ -797,6 +809,49 @@ public class GUI extends JFrame implements Runnable{
         }
     }
 
+    public static void generateMultipleFiles(File[] files, String c, String issueKeyPrefix){
+        ArrayList<String> fileNames = new ArrayList<>();
+        for(File file : files){
+            String fileName = file.toString();
+            File folder  = new File(fileName.substring(0,fileName.lastIndexOf("\\")+1)+issueKeyPrefix+"_Project");
+            folder.mkdir();
+            String onlyFileName = fileName.substring(fileName.lastIndexOf("\\"), fileName.lastIndexOf("."));
+            String saveFilePath = fileName.substring(0,fileName.lastIndexOf("\\")+1)+issueKeyPrefix+"_Project"+ onlyFileName +"_MULTIPLE.csv";
+            if(convertType.equals("Word"))
+                WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
+            else if(convertType.equals("Excel"))
+                ExcelToJira.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
+            fileNames.add(onlyFileName.substring(1));
+        }
+
+
+        try {
+            //TBU writing
+            FileWriter myWriter = new FileWriter(files[0].toString().substring(0,files[0].toString().lastIndexOf("\\")+1)+issueKeyPrefix+"_Project\\Test_Set.csv");
+            myWriter.write("Issue key;");
+            myWriter.write("Issue id;");
+            myWriter.write("Summary;");
+            for(String fileName : fileNames){
+                myWriter.write("Test Set;");
+                myWriter.write(fileName+";");
+                myWriter.write(fileName+";");
+                myWriter.write("\n");
+            }
+
+            myWriter.close();
+
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String sStackTrace = sw.toString(); // stack trace as a string
+            System.out.println(sStackTrace);
+        }
+
+    }
+
+
+
     /**
      * This method saves config
      */
@@ -860,8 +915,9 @@ public class GUI extends JFrame implements Runnable{
         fileDialog.setMode(FileDialog.LOAD);
         fileDialog.setVisible(true);
 
+
         if(fileDialog.getDirectory() != null && fileDialog.getFile() != null){
-            filePathLabel.setText(fileDialog.getDirectory()+fileDialog.getFile());
+                filePathLabel.setText(fileDialog.getDirectory()+"\\"+fileDialog.getFile());
             if(convertType.equals("Word")){
                 saveFileDialog.setFile(fileDialog.getFile().substring(0,fileDialog.getFile().lastIndexOf("."))+"_TBC.csv");
                 saveFilePathLabel.setText(saveFileDialog.getDirectory()  + "\\" + saveFileDialog.getFile());
@@ -894,6 +950,8 @@ public class GUI extends JFrame implements Runnable{
             issueKeyPrefix.setVisible(true);
             issueKeyPrefixLabel.setVisible(true);
         }
+
+
     }
 
     public static void saveFileExplorer(){
