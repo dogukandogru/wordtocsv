@@ -775,17 +775,19 @@ class WordToCSV {
 
         ArrayList<Test> tests = new ArrayList<Test>(infos.size());
         int idNumber = 1000;
+
         for(int i=0; i<infos.size(); i++){
             Test test = new Test();
             Info info = new Info();
             Gson gsonBuilder = new GsonBuilder().create();
             String manualTestStep = "[";
+            int indexCount = 1;
             for(int j=0; j<infos.get(i).size(); j++){
                 try{
                     switch (j%6) {
                         case 0:
                             //info.setIndex(Integer.parseInt(infos.get(i).get(j)));
-                            info.setIndex(j+1);
+                            info.setIndex(indexCount++);
                             break;
                         case 1:
                             info.setStep(infos.get(i).get(j));
