@@ -784,7 +784,8 @@ class WordToCSV {
                 try{
                     switch (j%6) {
                         case 0:
-                            info.setIndex(Integer.parseInt(infos.get(i).get(j)));
+                            //info.setIndex(Integer.parseInt(infos.get(i).get(j)));
+                            info.setIndex(j+1);
                             break;
                         case 1:
                             info.setStep(infos.get(i).get(j));

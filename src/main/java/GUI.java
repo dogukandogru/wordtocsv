@@ -724,7 +724,7 @@ public class GUI extends JFrame implements Runnable{
 
                     File[] fileNames = fileDialog.getFiles();
                     if(fileNames.length > 1){
-                        generateMultipleFiles(fileNames,c,issueKeyPrefix);
+                        notificationText = generateMultipleFiles(fileNames,c,issueKeyPrefix);
                         return;
                     }
 
@@ -809,7 +809,8 @@ public class GUI extends JFrame implements Runnable{
         }
     }
 
-    public static void generateMultipleFiles(File[] files, String c, String issueKeyPrefix){
+    public static String generateMultipleFiles(File[] files, String c, String issueKeyPrefix){
+        String returnVal  = "";
         ArrayList<String> fileNames = new ArrayList<>();
         for(File file : files){
             String fileName = file.toString();
@@ -818,9 +819,9 @@ public class GUI extends JFrame implements Runnable{
             String onlyFileName = fileName.substring(fileName.lastIndexOf("\\"), fileName.lastIndexOf("."));
             String saveFilePath = fileName.substring(0,fileName.lastIndexOf("\\")+1)+issueKeyPrefix+"_Project"+ onlyFileName +"_MULTIPLE.csv";
             if(convertType.equals("Word"))
-                WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
+                returnVal = WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
             else if(convertType.equals("Excel"))
-                ExcelToJira.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
+                returnVal = ExcelToJira.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
             fileNames.add(onlyFileName.substring(1));
         }
 
@@ -847,7 +848,7 @@ public class GUI extends JFrame implements Runnable{
             String sStackTrace = sw.toString(); // stack trace as a string
             System.out.println(sStackTrace);
         }
-
+        return returnVal;
     }
 
 
