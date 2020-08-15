@@ -27,6 +27,7 @@ public class GUI extends JFrame implements Runnable{
     private static JFrame frame; // Main frame
     private static String language = "Turkish";
     private static String convertType = "Word";
+    private static int jiraVersion = 7;
     /* This part may be useful in future
     private static JFileChooser fileChooser = new JFileChooser();
     private static JFileChooser saveFileChooser = new JFileChooser();
@@ -36,7 +37,8 @@ public class GUI extends JFrame implements Runnable{
     private static JLabel languageLabel = new JLabel("TPR Language");
     private static JToggleButton trButton =new JToggleButton("TÜRKÇE");
     private static JToggleButton engButton = new JToggleButton("ENGLISH");
-
+    private static JToggleButton version7Button =new JToggleButton("V7.X.X");
+    private static JToggleButton version8Button = new JToggleButton("V8.X.X");
 
 
     public static void main(String[] args){
@@ -580,6 +582,29 @@ public class GUI extends JFrame implements Runnable{
             }
         });
 
+        version7Button.setSelected(true);
+        version7Button.setBounds(670,180,100,50);
+        version7Button.setBackground(Color.white);
+        version7Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                version8Button.setSelected(false);
+                version7Button.setSelected(true);
+                jiraVersion = 7;
+            }
+        });
+
+        version8Button.setBounds(790,180,100,50);
+        version8Button.setBackground(Color.white);
+        version8Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                version8Button.setSelected(true);
+                version7Button.setSelected(false);
+                jiraVersion = 8;
+            }
+        });
+
 
 
         replaceCharacterLabel.setBorder(new RoundedBorder(10));
@@ -743,14 +768,14 @@ public class GUI extends JFrame implements Runnable{
                                 break;
                             case 1:
                                 if(convertType.equals("Word"))
-                                        notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language);
+                                        notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,jiraVersion);
                                 else if(convertType.equals("Excel"))
                                         notificationText = ExcelToJira.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language);
                         }
                     }
                     else{
                         if(convertType.equals("Word"))
-                            notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language);
+                            notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,jiraVersion);
                         else if(convertType.equals("Excel"))
                             notificationText = ExcelToJira.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language);
                     }
@@ -798,7 +823,8 @@ public class GUI extends JFrame implements Runnable{
         panel.add(languageLabel);
         panel.add(trButton);
         panel.add(engButton);
-
+        panel.add(version7Button);
+        panel.add(version8Button);
         frame.add(panel);
         frame.setVisible(true);
 
@@ -819,7 +845,7 @@ public class GUI extends JFrame implements Runnable{
             String onlyFileName = fileName.substring(fileName.lastIndexOf("\\"), fileName.lastIndexOf("."));
             String saveFilePath = fileName.substring(0,fileName.lastIndexOf("\\")+1)+issueKeyPrefix+"_Project"+ onlyFileName +"_MULTIPLE.csv";
             if(convertType.equals("Word"))
-                returnVal = WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
+                returnVal = WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language,jiraVersion);
             else if(convertType.equals("Excel"))
                 returnVal = ExcelToJira.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
             fileNames.add(onlyFileName.substring(1));
@@ -945,11 +971,15 @@ public class GUI extends JFrame implements Runnable{
             convertType = "Excel";
             issueKeyPrefix.setVisible(false);
             issueKeyPrefixLabel.setVisible(false);
+            version7Button.setVisible(false);
+            version8Button.setVisible(false);
         }
         if(filePathLabel.getText().endsWith(".doc") || filePathLabel.getText().endsWith(".docx")){
             convertType = "Word";
             issueKeyPrefix.setVisible(true);
             issueKeyPrefixLabel.setVisible(true);
+            version7Button.setVisible(true);
+            version8Button.setVisible(true);
         }
 
 

@@ -20,7 +20,7 @@ class WordToCSV {
     static String notification = "";
     static boolean isOleNeeded[];
 
-    public static String generateCsv(String fileName, String charToReplace, String saveFileName, String issueKeyPrefix,String language) {
+    public static String generateCsv(String fileName, String charToReplace, String saveFileName, String issueKeyPrefix,String language,int jiraVersion) {
         //setting console output to errorLog.txt
         try{
             PrintStream fileOut = new PrintStream("./errorLog.txt");
@@ -37,9 +37,9 @@ class WordToCSV {
 
 
         if(language.equals("Turkish"))
-            tests = readTurkish(fileName,issueKeyPrefix);
+            tests = readTurkish(fileName,issueKeyPrefix,jiraVersion);
         else if(language.equals("English"))
-            tests = readEnglish(fileName,issueKeyPrefix);
+            tests = readEnglish(fileName,issueKeyPrefix,jiraVersion);
 
 
         if(fileName.equals("")){
@@ -271,7 +271,7 @@ class WordToCSV {
     }
 
 
-    public static ArrayList<Test> readEnglish(String fileName,String issueKeyPrefix){
+    public static ArrayList<Test> readEnglish(String fileName,String issueKeyPrefix,int jiraVersion){
         int testCount=0;
         ArrayList<Test> tests = new ArrayList<>();
         try {
@@ -345,7 +345,15 @@ class WordToCSV {
                 }
             }
 
-            tests = fillManuelSteps(infos);
+            switch (jiraVersion){
+                case 7:
+                    tests = fillManuelStepsV7(infos);
+                    break;
+                case 8:
+                    tests = fillManuelStepsV8(infos);
+                    break;
+            }
+
             //System.out.println(isOleNeeded[0]);
 
 
@@ -517,7 +525,7 @@ class WordToCSV {
         return tests;
     }
 
-    public static ArrayList<Test> readTurkish(String fileName,String issueKeyPrefix){
+    public static ArrayList<Test> readTurkish(String fileName,String issueKeyPrefix,int jiraVersion){
         int testCount=0;
         ArrayList<Test> tests = new ArrayList<>();
         try {
@@ -589,8 +597,15 @@ class WordToCSV {
                 }
             }
 
-            tests = fillManuelSteps(infos);
-            //System.out.println(isOleNeeded[0]);
+            switch (jiraVersion){
+                case 7:
+                    tests = fillManuelStepsV7(infos);
+                    break;
+                case 8:
+                    tests = fillManuelStepsV8(infos);
+                    break;
+            }
+
 
 
             List<XWPFParagraph> paragraphList = xdoc.getParagraphs();
@@ -765,7 +780,7 @@ class WordToCSV {
 
         return tests;
     }
-    public static ArrayList<Test> fillManuelSteps(ArrayList<ArrayList<String>> infos){
+    public static ArrayList<Test> fillManuelStepsV7(ArrayList<ArrayList<String>> infos){
         for(ArrayList<String> info : infos){
             String s = info.get(info.size()-1);
             String s2  = info.get(info.size()-1).replaceAll(" ","");
@@ -805,6 +820,74 @@ class WordToCSV {
                         case 5:
                             info.setData(infos.get(i).get(j));
                             manualTestStep += gsonBuilder.toJson(info);
+                            if(j+1 != infos.get(i).size())
+                                manualTestStep += ",";
+                            break;
+                    }
+                }
+                catch(Exception e){
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    String sStackTrace = sw.toString(); // stack trace as a string
+                    System.out.println(sStackTrace);
+                }
+            }
+            manualTestStep += "]";
+            test.setManualTestSteps(manualTestStep);
+            tests.add(test);
+        }
+        return tests;
+    }
+
+    public static ArrayList<Test> fillManuelStepsV8(ArrayList<ArrayList<String>> infos){
+        for(ArrayList<String> info : infos){
+            String s = info.get(info.size()-1);
+            String s2  = info.get(info.size()-1).replaceAll(" ","");
+            if(info.get(info.size()-1).replaceAll(" ","").contains("*:G:GeçtiK:KaldıUD:UygulanabilirDeğil"))
+                info.remove(info.size()-1);
+        }
+
+        ArrayList<Test> tests = new ArrayList<Test>(infos.size());
+        int idNumber = 1000;
+
+        for(int i=0; i<infos.size(); i++){
+            Test test = new Test();
+            InfoV8 info = new InfoV8();
+            Gson gsonBuilder = new GsonBuilder().create();
+            String manualTestStep = "[";
+            int indexCount = 1;
+            InfoV8.Fields fields = new InfoV8.Fields();
+            for(int j=0; j<infos.get(i).size(); j++){
+
+                try{
+                    switch (j%6) {
+                        case 0:
+                            //info.setIndex(Integer.parseInt(infos.get(i).get(j)));
+                            info.setIndex(indexCount++);
+                            break;
+                        case 1:
+                            String s = infos.get(i).get(j);
+                            fields.setAction(infos.get(i).get(j));
+                            //info.setStep(infos.get(i).get(j));
+                            break;
+                        case 2:
+                            fields.setExpectedResult(infos.get(i).get(j));
+                            //info.setResult(infos.get(i).get(j));
+                            break;
+                        case 3:
+                            info.setAttachments(new String[0]);
+                            break;
+                        case 4:
+                            info.setId(idNumber);
+                            idNumber++;
+                            break;
+                        case 5:
+                            fields.setData(infos.get(i).get(j));
+                            info.setFields(fields);
+                            //info.setData(infos.get(i).get(j));
+                            manualTestStep += gsonBuilder.toJson(info);
+                            manualTestStep = manualTestStep.replace("Expected_$ThisPartWillBeRemoved$_Result","Expected Result");
                             if(j+1 != infos.get(i).size())
                                 manualTestStep += ",";
                             break;
