@@ -210,7 +210,7 @@ class WordToCSV {
                             myWriter2.write("\""+test.getIssueID()+"\""+";");
                             if(test.getSummary().length() == 0)
                                 myWriter2.write("\""+"YOKTUR"+"\""+";");
-                            if(test.getSummary().length() < 235){
+                            else if(test.getSummary().length() < 235){
                                 myWriter2.write("\""+test.getSummary()+"\""+";");
                             }
                             else{
