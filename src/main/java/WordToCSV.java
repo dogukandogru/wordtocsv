@@ -208,6 +208,8 @@ class WordToCSV {
                             myWriter2.write("\""+test.getIssueKey()+"\""+";");
                             myWriter2.write("\""+"TEST"+"\""+";");
                             myWriter2.write("\""+test.getIssueID()+"\""+";");
+                            if(test.getSummary().length() == 0)
+                                myWriter2.write("\""+"YOKTUR"+"\""+";");
                             if(test.getSummary().length() < 235){
                                 myWriter2.write("\""+test.getSummary()+"\""+";");
                             }
@@ -257,7 +259,7 @@ class WordToCSV {
     public static String checkStringLength(String s){
         if(s.length() > 32760){
             manualimportlabel = "Manuel_test_steps_import_needed";
-            return s.substring(0,30000);
+            return "";
         }
         else{
             return s;
