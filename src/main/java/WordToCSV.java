@@ -172,8 +172,8 @@ class WordToCSV {
                     summarytrimmedlabel = "";
                     if(!test.getIssueKey().equals("")){ // UPDATED
                         try{
-                            myWriter.write("\""+checkStringLength(test.getIssueKey())+"\""+";");
-                            myWriter.write("\""+checkStringLength(test.getIssueID())+"\""+";");
+                            myWriter.write("\""+test.getIssueKey()+"\""+";");
+                            myWriter.write("\""+test.getIssueID()+"\""+";");
                            // myWriter.write("\""+checkStringLength(test.getSummary())+"\""+";");
                             if(test.getSummary().length() < 250){
                                 myWriter.write("\""+test.getSummary()+"\""+";");
@@ -182,11 +182,11 @@ class WordToCSV {
                                 myWriter.write("\""+test.getSummary().substring(0,249) +"\""+";");
                                 summarytrimmedlabel = "Summary_Trimmed";
                             }
-                            myWriter.write("\""+checkStringLength(test.getDescription())+"\""+";");
+                            myWriter.write("\""+test.getDescription()+"\""+";");
                             myWriter.write(""+checkStringLength(test.getManualTestSteps())+""+";");
-                            myWriter.write("\""+checkStringLength(test.getAssumptionsAndConstraints())+"\""+";");
-                            myWriter.write("\""+checkStringLength(test.getTestInputs())+"\""+";");
-                            myWriter.write("\""+checkStringLength(test.getConditions())+"\""+";");
+                            myWriter.write("\""+test.getAssumptionsAndConstraints()+"\""+";");
+                            myWriter.write("\""+test.getTestInputs()+"\""+";");
+                            myWriter.write("\""+test.getConditions()+"\""+";");
                             myWriter.write("\""+manualimportlabel+"\""+";");
                             myWriter.write("\""+summarytrimmedlabel+"\""+";");
                             if(isOleNeeded[tests.indexOf(test)])
@@ -257,7 +257,7 @@ class WordToCSV {
 
     }
     public static String checkStringLength(String s){
-        if(s.length() > 32760){
+        if(s.length() > 32760 || s.equals("[]")){
             manualimportlabel = "Manuel_test_steps_import_needed";
             return "";
         }
@@ -784,6 +784,9 @@ class WordToCSV {
     }
     public static ArrayList<Test> fillManuelStepsV7(ArrayList<ArrayList<String>> infos){
         for(ArrayList<String> info : infos){
+            if(info.size() == 0){
+                continue;
+            }
             String s = info.get(info.size()-1);
             String s2  = info.get(info.size()-1).replaceAll(" ","");
             if(info.get(info.size()-1).replaceAll(" ","").contains("*:G:GeçtiK:KaldıUD:UygulanabilirDeğil"))
@@ -844,6 +847,9 @@ class WordToCSV {
 
     public static ArrayList<Test> fillManuelStepsV8(ArrayList<ArrayList<String>> infos){
         for(ArrayList<String> info : infos){
+            if(info.size() == 0){
+                continue;
+            }
             String s = info.get(info.size()-1);
             String s2  = info.get(info.size()-1).replaceAll(" ","");
             if(info.get(info.size()-1).replaceAll(" ","").contains("*:G:GeçtiK:KaldıUD:UygulanabilirDeğil"))
