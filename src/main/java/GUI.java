@@ -20,6 +20,7 @@ public class GUI extends JFrame implements Runnable{
     private static PlaceholderTextField issueKeyPrefixLabel;
     private static JLabel notification;
     private static JComboBox charToReplace;
+    private static JComboBox charToReplaceForQuote;
     private static final FileDialog fileDialog = new FileDialog((Frame)null, "Select TPR to be converted");
     private static final FileDialog saveFileDialog = new FileDialog((Frame)null, "Select place to create .csv file");
     private static final Preferences userPreferences = Preferences.userRoot(); // To save config
@@ -33,6 +34,8 @@ public class GUI extends JFrame implements Runnable{
     private static JFileChooser saveFileChooser = new JFileChooser();
     */
     private static JLabel replaceCharacterLabel = new JLabel("Replace \"paragraph\" character (\\n) with");
+    private static JLabel replaceQuotationLabel = new JLabel("Replace \"quote\" character (\") with");
+
     private static JLabel issueKeyPrefix = new JLabel("Please Set Issue Key Prefix");
     private static JLabel languageLabel = new JLabel("TPR Language");
     private static JToggleButton trButton =new JToggleButton("TÜRKÇE");
@@ -470,7 +473,7 @@ public class GUI extends JFrame implements Runnable{
         // Frame settings
         frame= new JFrame(gc);
         frame.setTitle("HVL-TEMP-TPR-to-HVL-GO Exportable");
-        frame.setSize(1000, 520);
+        frame.setSize(1000, 620);
         frame.setResizable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
@@ -616,7 +619,7 @@ public class GUI extends JFrame implements Runnable{
         replaceCharacterLabel.setFont(replaceCharacterLabel.getFont().deriveFont(13f));
 
 
-        String[] chars = {"#","$","æ","€"};
+        String[] chars = {"#", "æ","€"};
         charToReplace = new JComboBox(chars);
         charToReplace.setBounds(350, 260, 100, 50);
         charToReplace.setFont(charToReplace.getFont().deriveFont(15f));
@@ -644,18 +647,55 @@ public class GUI extends JFrame implements Runnable{
 
 
 
+        replaceQuotationLabel.setBorder(new RoundedBorder(10));
+        replaceQuotationLabel.setBackground(Color.white);
+        replaceQuotationLabel.setVerticalAlignment(JLabel.CENTER);
+        replaceQuotationLabel.setHorizontalAlignment(JLabel.CENTER);
+        replaceQuotationLabel.setBounds(20, 340, 300, 50);
+        replaceQuotationLabel.setOpaque(true);
+        replaceQuotationLabel.setFont(replaceQuotationLabel.getFont().deriveFont(13f));
+
+
+        String[] chars2 = {"#", "æ","€"};
+        charToReplaceForQuote = new JComboBox(chars);
+        charToReplaceForQuote.setBounds(350, 340, 100, 50);
+        charToReplaceForQuote.setFont(charToReplaceForQuote.getFont().deriveFont(15f));
+        charToReplaceForQuote.setBackground(Color.white);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         JLabel saveLabel = new JLabel("Select place to create .csv file");
         saveLabel.setBorder(new RoundedBorder(10));
         saveLabel.setBackground(Color.white);
         saveLabel.setVerticalAlignment(JLabel.CENTER);
         saveLabel.setHorizontalAlignment(JLabel.CENTER);
-        saveLabel.setBounds(20, 340, 300, 50);
+        saveLabel.setBounds(20, 420, 300, 50);
         saveLabel.setOpaque(true);
         saveLabel.setFont(saveLabel.getFont().deriveFont(15f));
 
         saveFilePathLabel = new PlaceholderTextField("");
         saveFilePathLabel.setPlaceholder("File Path");
-        saveFilePathLabel.setBounds(350, 340, 500, 50);
+        saveFilePathLabel.setBounds(350, 420, 500, 50);
         saveFilePathLabel.setEditable(true);
         saveFilePathLabel.setOpaque(true);
         saveFilePathLabel.setFont(saveFilePathLabel.getFont().deriveFont(15f));
@@ -664,7 +704,7 @@ public class GUI extends JFrame implements Runnable{
         saveSearchButton.setFont(saveSearchButton.getFont().deriveFont(12f));
         saveSearchButton.setBorder(new RoundedBorder(25));
         saveSearchButton.setBackground(Color.WHITE);
-        saveSearchButton.setBounds(860,340,100,50);
+        saveSearchButton.setBounds(860,420,100,50);
         saveSearchButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 saveFileExplorer();
@@ -674,7 +714,7 @@ public class GUI extends JFrame implements Runnable{
 
 
         notification = new JLabel("");
-        notification.setBounds(20, 420, 600, 50);
+        notification.setBounds(20, 5990, 600, 50);
         notification.setOpaque(true);
         notification.setFont(notification.getFont().deriveFont(15f));
         notification.setBackground(Color.white);
@@ -684,7 +724,7 @@ public class GUI extends JFrame implements Runnable{
         clearAll.setFont(clearAll.getFont().deriveFont(12f));
         clearAll.setBorder(new RoundedBorder(18));
         clearAll.setBackground(Color.WHITE);
-        clearAll.setBounds(640,420,100,50);
+        clearAll.setBounds(640,500,100,50);
         clearAll.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 userPreferences.remove("filePath");
@@ -706,7 +746,7 @@ public class GUI extends JFrame implements Runnable{
         createCsv.setFont(createCsv.getFont().deriveFont(12f));
         createCsv.setBorder(new RoundedBorder(18));
         createCsv.setBackground(Color.WHITE);
-        createCsv.setBounds(750,420,100,50);
+        createCsv.setBounds(750,500,100,50);
         createCsv.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String notificationText="";
@@ -714,12 +754,22 @@ public class GUI extends JFrame implements Runnable{
                 String saveFilePath = saveFilePathLabel.getText();
                 try{
                     String c = charToReplace.getSelectedItem().toString();
+                    String quote = charToReplaceForQuote.getSelectedItem().toString();
+                    if(c.equals(quote)){
+                        notificationText = "Değiştirilecek karakterler aynı olamaz.";
+                        return;
+                    }
+
                     if(filePath.equals("") || (!filePath.contains(".docx") && !filePath.contains(".xlsx") && !filePath.contains(".XLSX") && !filePath.contains(".xls") && !filePath.contains(".doc"))){
                         notificationText = "TPR file must be declared.";
                         return;
                     }
                     if(charToReplace.equals("")){
                         notificationText = "Replace character must be typed.";
+                        return;
+                    }
+                    if(charToReplaceForQuote.equals("")){
+                        notificationText = "Quote character must be typed.";
                         return;
                     }
                     if(saveFilePath.equalsIgnoreCase("") || !saveFilePath.contains(".csv")){
@@ -749,7 +799,7 @@ public class GUI extends JFrame implements Runnable{
 
                     File[] fileNames = fileDialog.getFiles();
                     if(fileNames.length > 1){
-                        notificationText = generateMultipleFiles(fileNames,c,issueKeyPrefix);
+                        notificationText = generateMultipleFiles(fileNames,c,issueKeyPrefix,quote);
                         return;
                     }
 
@@ -768,16 +818,16 @@ public class GUI extends JFrame implements Runnable{
                                 break;
                             case 1:
                                 if(convertType.equals("Word"))
-                                        notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,jiraVersion);
+                                        notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,jiraVersion,quote);
                                 else if(convertType.equals("Excel"))
-                                        notificationText = ExcelToJira.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language);
+                                        notificationText = ExcelToJira.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,quote);
                         }
                     }
                     else{
                         if(convertType.equals("Word"))
-                            notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,jiraVersion);
+                            notificationText = WordToCSV.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,jiraVersion,quote);
                         else if(convertType.equals("Excel"))
-                            notificationText = ExcelToJira.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language);
+                            notificationText = ExcelToJira.generateCsv(filePath,c,saveFilePath,issueKeyPrefix,language,quote);
                     }
                 }
                 finally {
@@ -794,7 +844,7 @@ public class GUI extends JFrame implements Runnable{
         close.setFont(close.getFont().deriveFont(12f));
         close.setBorder(new RoundedBorder(18));
         close.setBackground(Color.WHITE);
-        close.setBounds(860,420,100,50);
+        close.setBounds(860,500,100,50);
         close.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 saveConfig();
@@ -825,6 +875,8 @@ public class GUI extends JFrame implements Runnable{
         panel.add(engButton);
         panel.add(version7Button);
         panel.add(version8Button);
+        panel.add(replaceQuotationLabel);
+        panel.add(charToReplaceForQuote);
         frame.add(panel);
         frame.setVisible(true);
 
@@ -835,7 +887,7 @@ public class GUI extends JFrame implements Runnable{
         }
     }
 
-    public static String generateMultipleFiles(File[] files, String c, String issueKeyPrefix){
+    public static String generateMultipleFiles(File[] files, String c, String issueKeyPrefix, String quoteChar){
         String returnVal  = "";
         ArrayList<String> fileNames = new ArrayList<>();
         for(File file : files){
@@ -845,9 +897,9 @@ public class GUI extends JFrame implements Runnable{
             String onlyFileName = fileName.substring(fileName.lastIndexOf("\\"), fileName.lastIndexOf("."));
             String saveFilePath = fileName.substring(0,fileName.lastIndexOf("\\")+1)+issueKeyPrefix+"_Project"+ onlyFileName +"_MULTIPLE.csv";
             if(convertType.equals("Word"))
-                returnVal = WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language,jiraVersion);
+                returnVal = WordToCSV.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language,jiraVersion,quoteChar);
             else if(convertType.equals("Excel"))
-                returnVal = ExcelToJira.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language);
+                returnVal = ExcelToJira.generateCsv(fileName,c,saveFilePath,issueKeyPrefix,language,quoteChar);
             fileNames.add(onlyFileName.substring(1));
         }
 

@@ -11,9 +11,9 @@ class ExcelToJira {
 
     private static String notification = ""; // This string returns errors and infos to GUI
     private static String language; // language of TPR File
-    public static String  generateCsv(String fileName, String charToReplace, String saveFileName, String issueKeyPrefix,String languageFromGUI ){
+    public static String  generateCsv(String fileName, String charToReplace, String saveFileName, String issueKeyPrefix,String languageFromGUI, String quoteChar){
         language = languageFromGUI;
-        read(fileName,charToReplace,saveFileName);
+        read(fileName,charToReplace,saveFileName, quoteChar);
         return notification;
     }
 
@@ -24,7 +24,7 @@ class ExcelToJira {
      * @param replaceChar The char to put between steps
      * @param saveFilename The name of the file to be saved
      */
-    private static void read(String fileName, String replaceChar,String saveFilename) {
+    private static void read(String fileName, String replaceChar,String saveFilename, String quoteChar) {
         ArrayList<Test> tests = new ArrayList<>();
         ArrayList<String> sheetNames = new ArrayList<>();
         try{
@@ -193,7 +193,7 @@ class ExcelToJira {
         }
         // Calling write method
         try{
-            write(tests,saveFilename,replaceChar,sheetNames);
+            write(tests,saveFilename,replaceChar,sheetNames, quoteChar);
         }
         catch (Exception e){ // If there is an exception this code part will be print the exception to errorLog.file
             StringWriter sw = new StringWriter();
@@ -211,7 +211,7 @@ class ExcelToJira {
      * @param charToReplace \n replacement character
      * @param sheetNames Sheet names
      */
-    private static void write(ArrayList<Test> tests,String filename,String charToReplace,ArrayList<String> sheetNames){
+    private static void write(ArrayList<Test> tests,String filename,String charToReplace,ArrayList<String> sheetNames, String quoteChar){
         String filenameTBC;
         String filenameTBU;
 
@@ -222,6 +222,7 @@ class ExcelToJira {
 
         tests = WordToCSV.replaceSemicolons(tests); // Replacing semicolons, because semicolon made exceptions
         tests = WordToCSV.replaceBackslashN(tests,charToReplace); // Replacing  \n, because \n made exceptions
+        tests = WordToCSV.replaceQuoteChar(tests,quoteChar);
 
 
         try {

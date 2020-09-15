@@ -20,7 +20,7 @@ class WordToCSV {
     static String notification = "";
     static boolean isOleNeeded[];
 
-    public static String generateCsv(String fileName, String charToReplace, String saveFileName, String issueKeyPrefix,String language,int jiraVersion) {
+    public static String generateCsv(String fileName, String charToReplace, String saveFileName, String issueKeyPrefix,String language,int jiraVersion, String quoteChar) {
         //setting console output to errorLog.txt
         try{
             PrintStream fileOut = new PrintStream("./errorLog.txt");
@@ -46,7 +46,7 @@ class WordToCSV {
             notification = "Docx file must be declared.";
             return notification;
         }
-        write(tests,saveFileName,charToReplace);
+        write(tests,saveFileName,charToReplace,quoteChar);
 
         return notification;
     }
@@ -101,8 +101,46 @@ class WordToCSV {
         return newTests;
     }
 
+    public static ArrayList<Test> replaceQuoteChar(ArrayList<Test> tests,String quoteChar){
+        ArrayList<Test> newTests = new ArrayList<>();
+        for(Test test : tests){
+            String issueKey = test.getIssueKey();
+            String issueID = test.getIssueID();
+            String summary = test.getSummary();
+            String description = test.getDescription();
+            String manualTestSteps = test.getManualTestSteps();
+            String assumptionsAndConstraints = test.getAssumptionsAndConstraints();
+            String testInputs = test.getTestInputs();
+            String conditions = test.getConditions();
 
-    public static void write(ArrayList<Test> tests,String filename,String charToReplace){
+            String chars[] = {"‟", "“", "”", "〝", "〞", "〟"};
+            for(int i=0; i<chars.length; i++){
+                System.out.println(chars[i]);
+                issueKey = issueKey.replaceAll(chars[i], quoteChar);
+                issueID = issueID.replaceAll(chars[i], quoteChar);
+                summary = summary.replaceAll(chars[i], quoteChar);
+                description = description.replaceAll(chars[i], quoteChar);
+                manualTestSteps = manualTestSteps.replaceAll(chars[i], quoteChar);
+                assumptionsAndConstraints = assumptionsAndConstraints.replaceAll(chars[i], quoteChar);
+                testInputs = testInputs.replaceAll(chars[i], quoteChar);
+                conditions = conditions.replaceAll(chars[i], quoteChar);
+            }
+            Test newTest = new Test();
+            newTest.setIssueKey(issueKey);
+            newTest.setIssueID(issueID);
+            newTest.setSummary(summary);
+            newTest.setDescription(description);
+            newTest.setManualTestSteps(manualTestSteps);
+            newTest.setAssumptionsAndConstraints(assumptionsAndConstraints);
+            newTest.setTestInputs(testInputs);
+            newTest.setConditions(conditions);
+            newTests.add(newTest);
+        }
+        return newTests;
+    }
+
+
+    public static void write(ArrayList<Test> tests,String filename,String charToReplace, String quoteChar){
         String filenameTBC;
         String filenameTBU;
         if(filename.contains("_")){
@@ -115,7 +153,7 @@ class WordToCSV {
         }
         tests = replaceSemicolons(tests);
         tests = replaceBackslashN(tests,charToReplace);
-
+        tests = replaceQuoteChar(tests,quoteChar);
         File tbu = new File(filenameTBU);
         File tbc = new File(filenameTBC);
 
