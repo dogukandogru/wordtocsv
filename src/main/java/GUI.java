@@ -40,7 +40,7 @@ public class GUI extends JFrame implements Runnable{
     private static JLabel languageLabel = new JLabel("TPR Language");
     private static JToggleButton trButton =new JToggleButton("TÜRKÇE");
     private static JToggleButton engButton = new JToggleButton("ENGLISH");
-    private static JToggleButton version7Button =new JToggleButton("V7.X.X");
+    //private static JToggleButton version7Button =new JToggleButton("V7.X.X");
     private static JToggleButton version8Button = new JToggleButton("V8.X.X");
 
 
@@ -585,7 +585,7 @@ public class GUI extends JFrame implements Runnable{
             }
         });
 
-        version7Button.setSelected(true);
+        /*version7Button.setSelected(true);
         version7Button.setBounds(670,180,100,50);
         version7Button.setBackground(Color.white);
         version7Button.addActionListener(new ActionListener() {
@@ -595,18 +595,21 @@ public class GUI extends JFrame implements Runnable{
                 version7Button.setSelected(true);
                 jiraVersion = 7;
             }
-        });
+        });*/
 
         version8Button.setBounds(790,180,100,50);
         version8Button.setBackground(Color.white);
-        version8Button.addActionListener(new ActionListener() {
+        version8Button.setSelected(true);
+        jiraVersion = 8;
+        version8Button.setEnabled(false);
+        /*version8Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 version8Button.setSelected(true);
-                version7Button.setSelected(false);
+                //version7Button.setSelected(false);
                 jiraVersion = 8;
             }
-        });
+        });*/
 
 
 
@@ -873,7 +876,7 @@ public class GUI extends JFrame implements Runnable{
         panel.add(languageLabel);
         panel.add(trButton);
         panel.add(engButton);
-        panel.add(version7Button);
+        //panel.add(version7Button);
         panel.add(version8Button);
         panel.add(replaceQuotationLabel);
         panel.add(charToReplaceForQuote);
@@ -1023,14 +1026,14 @@ public class GUI extends JFrame implements Runnable{
             convertType = "Excel";
             issueKeyPrefix.setVisible(false);
             issueKeyPrefixLabel.setVisible(false);
-            version7Button.setVisible(false);
+            //version7Button.setVisible(false);
             version8Button.setVisible(false);
         }
         if(filePathLabel.getText().endsWith(".doc") || filePathLabel.getText().endsWith(".docx")){
             convertType = "Word";
             issueKeyPrefix.setVisible(true);
             issueKeyPrefixLabel.setVisible(true);
-            version7Button.setVisible(true);
+           // version7Button.setVisible(true);
             version8Button.setVisible(true);
         }
 

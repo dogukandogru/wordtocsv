@@ -1,7 +1,11 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.*;
 import java.util.*;
 
@@ -143,13 +147,16 @@ class WordToCSV {
     public static void write(ArrayList<Test> tests,String filename,String charToReplace, String quoteChar){
         String filenameTBC;
         String filenameTBU;
+        String samplesCSV;// = "samples_for_test.csv";
         if(filename.contains("_")){
             filenameTBC = filename.substring(0,filename.lastIndexOf("_"))+"_TBC.csv";
             filenameTBU = filename.substring(0,filename.lastIndexOf("_"))+"_TBU.csv";
+            samplesCSV = filename.substring(0,filename.lastIndexOf("_"))+"_to_TestCaseImport.csv";
         }
         else{
             filenameTBC = filename.substring(0,filename.lastIndexOf("."))+"_TBC.csv";
             filenameTBU = filename.substring(0,filename.lastIndexOf("."))+"_TBU.csv";
+            samplesCSV = filename.substring(0,filename.lastIndexOf("."))+"_to_TestCaseImport.csv";
         }
         tests = replaceSemicolons(tests);
         tests = replaceBackslashN(tests,charToReplace);
@@ -167,6 +174,26 @@ class WordToCSV {
         }
         else{
             try {
+                FileWriter myWriter3 = new FileWriter(samplesCSV);
+                System.out.println(filenameTBC);
+                    myWriter3.write("Issue key;");
+                    myWriter3.write("TCID;");
+                    myWriter3.write("Action;");
+                    myWriter3.write("Data;");
+                    myWriter3.write("Result;");
+                    myWriter3.write("Issue id;");
+                    myWriter3.write("Summary;");
+                    myWriter3.write("Description;");
+                    myWriter3.write("Component;");
+                    myWriter3.write("Custom field (Assumptions & Constraints);");
+                    myWriter3.write("Custom field (Test Inputs);");
+                    myWriter3.write("Custom field (Conditions);");
+                    myWriter3.write("Manuel_Test_Step_Import_Needed_Label;");
+                    myWriter3.write("Summary_Trimmed_Label;");
+                    myWriter3.write("OLE_Objects_Needs_Manuel_Processing_Label;");
+                    myWriter3.write("\n");
+
+
                 FileWriter myWriter2 = null;
                 for(Test test: tests){
                     if(test.getIssueKey().equals("")){
@@ -208,6 +235,85 @@ class WordToCSV {
 
                     manualimportlabel = "";
                     summarytrimmedlabel = "";
+
+
+                    JSONArray jsonArray2 = new JSONArray(test.getManualTestSteps());
+
+                    for(int i=0; i<jsonArray2.length(); i++){
+                        if (i==0){
+
+                            myWriter3.write("\""+test.getIssueKey()+"\""+";");
+
+
+                            myWriter3.write("\""+(i+1)+"\""+";");
+
+                            myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Action").toString()+""+";");
+                            if (((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Data") != null)
+                                myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Data").toString()+""+";");
+                            else
+                                myWriter3.write("\""+""+"\""+";");
+
+                            myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Expected Result")+""+";");
+
+                            myWriter3.write("\""+test.getIssueID()+"\""+";");
+                            if(test.getSummary().length() < 250){
+                                myWriter3.write("\""+test.getSummary()+"\""+";");
+                            }
+                            else{
+                                myWriter3.write("\""+test.getSummary().substring(0,249) +"\""+";");
+                                summarytrimmedlabel = "Summary_Trimmed";
+                            }
+                            myWriter3.write("\""+test.getDescription()+"\""+";");
+                            myWriter3.write("\""+""+"\""+";");
+                            myWriter3.write("\""+test.getAssumptionsAndConstraints()+"\""+";");
+                            myWriter3.write("\""+test.getTestInputs()+"\""+";");
+                            myWriter3.write("\""+test.getConditions()+"\""+";");
+                            checkStringLength(test.getManualTestSteps());
+                            myWriter3.write("\""+manualimportlabel+"\""+";");
+                            myWriter3.write("\""+summarytrimmedlabel+"\""+";");
+                            if(isOleNeeded[tests.indexOf(test)])
+                                myWriter3.write("\""+"OLE_Objects_Needs_Manuel_Processing_Needed"+"\""+";");
+                            myWriter3.write("\n");
+                        }
+                        else{
+                            myWriter3.write(";");
+                            myWriter3.write("\""+(i+1)+"\""+";");
+
+                            myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Action").toString()+""+";");
+                            if (((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Data") != null)
+                                myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Data").toString()+""+";");
+                            else
+                                myWriter3.write(";");
+
+                            myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Expected Result")+""+";");
+
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write(";");
+                            myWriter3.write("\n");
+                        }
+
+                    }
+                    System.out.println();
+
+
+
+
+
+
+
+
+
+
+
+
                     if(!test.getIssueKey().equals("")){ // UPDATED
                         try{
                             myWriter.write("\""+test.getIssueKey()+"\""+";");
@@ -283,6 +389,7 @@ class WordToCSV {
                 if(myWriter2 != null)
                     myWriter2.close();
                 myWriter.close();
+                myWriter3.close();
                 notification =  "Done! csv file generated.";
             } catch (Exception e) {
                 StringWriter sw = new StringWriter();
