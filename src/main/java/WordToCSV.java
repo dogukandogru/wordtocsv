@@ -208,6 +208,7 @@ class WordToCSV {
                 System.out.println(filenameTBC);
                     myWriter3.write("Issue key;");
                     myWriter3.write("TCID;");
+                    myWriter3.write("StepNo;");
                     myWriter3.write("Action;");
                     myWriter3.write("Data;");
                     myWriter3.write("Result;");
@@ -272,8 +273,9 @@ class WordToCSV {
                     for(int i=0; i<jsonArray2.length(); i++){
                         if (i==0){
 
-                             myWriter3.write("\""+test.getIssueKey()+"\""+";");
+                            myWriter3.write("\""+test.getIssueKey()+"\""+";");
 
+                            myWriter3.write("\""+(tests.indexOf(test)+1)+"\""+";");
 
                             myWriter3.write("\""+(i+1)+"\""+";");
 
@@ -307,6 +309,8 @@ class WordToCSV {
                         }
                         else{
                             myWriter3.write(";");
+
+                            myWriter3.write("\""+(tests.indexOf(test)+1)+"\""+";");
                             myWriter3.write("\""+(i+1)+"\""+";");
 
                             myWriter3.write(""+((JSONObject)((JSONObject)jsonArray2.get(i)).get("fields")).get("Action").toString()+""+";");
