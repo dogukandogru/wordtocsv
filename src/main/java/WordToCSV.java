@@ -80,17 +80,46 @@ class WordToCSV {
         return newTests;
     }
 
+    public static String replaceV2(String string, String target, String replacement){
+        String str = "";
+        if (string.equals(""))
+            return string;
+
+        for(int i=0; i<string.length(); i++){
+            if(string.charAt(i) == '\\' && string.charAt(i+1) == 'n'){
+                str += replacement;
+                i++;
+            }
+
+            else
+                str += string.charAt(i);
+        }
+        str += string.charAt(string.length()-1);
+        return str;
+    }
+
     public static ArrayList<Test> replaceBackslashN(ArrayList<Test> tests,String charToReplace){
         ArrayList<Test> newTests = new ArrayList<>();
         for(Test test : tests){
-            String issueKey = test.getIssueKey().replaceAll("\n", charToReplace);
+            /*String issueKey = test.getIssueKey().replaceAll("\n", charToReplace);
             String issueID = test.getIssueID().replaceAll("\n", charToReplace);
             String summary = test.getSummary().replaceAll("\n", charToReplace);
             String description = test.getDescription().replaceAll("\n", charToReplace);
-            String manualTestSteps = test.getManualTestSteps().replaceAll("\n", charToReplace);
+            String manualTestSteps = test.getManualTestSteps().replace("\n", charToReplace);
             String assumptionsAndConstraints = test.getAssumptionsAndConstraints().replaceAll("\n", charToReplace);
             String testInputs = test.getTestInputs().replaceAll("\n", charToReplace);
-            String conditions = test.getConditions().replaceAll("\n", charToReplace);
+            String conditions = test.getConditions().replaceAll("\n", charToReplace);*/
+
+
+            String issueKey = replaceV2(test.getIssueKey(),"\n",charToReplace);
+            String issueID = replaceV2(test.getIssueID(),"\n",charToReplace);
+            String summary = replaceV2(test.getSummary(),"\n",charToReplace);
+            String description = replaceV2(test.getDescription(),"\n",charToReplace);
+            String manualTestSteps = replaceV2(test.getManualTestSteps(),"\n",charToReplace);
+            String assumptionsAndConstraints = replaceV2(test.getAssumptionsAndConstraints(),"\n",charToReplace);
+            String testInputs = replaceV2(test.getTestInputs(),"\n",charToReplace);
+            String conditions = replaceV2(test.getConditions(),"\n",charToReplace);
+
             Test newTest = new Test();
             newTest.setIssueKey(issueKey);
             newTest.setIssueID(issueID);
@@ -171,6 +200,7 @@ class WordToCSV {
 
         if(!isExists){
             notification =  "Belirtilen Dosya Bulunamadı.";
+            notification =  "Belirtilen Dosya Bulunamadı.";
         }
         else{
             try {
@@ -242,7 +272,7 @@ class WordToCSV {
                     for(int i=0; i<jsonArray2.length(); i++){
                         if (i==0){
 
-                            myWriter3.write("\""+test.getIssueKey()+"\""+";");
+                             myWriter3.write("\""+test.getIssueKey()+"\""+";");
 
 
                             myWriter3.write("\""+(i+1)+"\""+";");
@@ -302,10 +332,6 @@ class WordToCSV {
 
                     }
                     System.out.println();
-
-
-
-
 
 
 
@@ -775,6 +801,7 @@ class WordToCSV {
             int count = 1;
             String issueKeyPrefixWithChar = "|" + issueKeyPrefix;
             for(int i=0; i<paragraphList.size(); i++){
+
                 if((paragraphList.get(i).getText().startsWith(issueKeyPrefix) && !isStartPointFound) || (paragraphList.get(i).getText().startsWith(issueKeyPrefixWithChar) && !isStartPointFound)/*paragraphList.get(i).getText().contains("TEST AÇIKLAMALARI")*/){
                     checkpoints[0] = i;
                     isStartPointFound = true;

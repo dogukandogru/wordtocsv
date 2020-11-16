@@ -22,35 +22,7 @@
 〝
 〞
 〟
-‟
-“
-”
-〝
-〞
-〟
-‟
-“
-”
-〝
-〞
-〟
-‟
-“
-”
-〝
-〞
-〟
-‟
-“
-”
-〝
-〞
-〟
-C:\Users\dogru\Downloads\issues (30) OKEY_TBC.csv
-
-
-
-
+C:\Users\dogru\Downloads\TPR_to_TestCaseImporter_TBC.csv
 
 
 
