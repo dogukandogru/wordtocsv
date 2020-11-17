@@ -101,24 +101,24 @@ class WordToCSV {
     public static ArrayList<Test> replaceBackslashN(ArrayList<Test> tests,String charToReplace){
         ArrayList<Test> newTests = new ArrayList<>();
         for(Test test : tests){
-            /*String issueKey = test.getIssueKey().replaceAll("\n", charToReplace);
+            String issueKey = test.getIssueKey().replaceAll("\n", charToReplace);
             String issueID = test.getIssueID().replaceAll("\n", charToReplace);
             String summary = test.getSummary().replaceAll("\n", charToReplace);
             String description = test.getDescription().replaceAll("\n", charToReplace);
             String manualTestSteps = test.getManualTestSteps().replace("\n", charToReplace);
             String assumptionsAndConstraints = test.getAssumptionsAndConstraints().replaceAll("\n", charToReplace);
             String testInputs = test.getTestInputs().replaceAll("\n", charToReplace);
-            String conditions = test.getConditions().replaceAll("\n", charToReplace);*/
+            String conditions = test.getConditions().replaceAll("\n", charToReplace);
 
 
-            String issueKey = replaceV2(test.getIssueKey(),"\n",charToReplace);
-            String issueID = replaceV2(test.getIssueID(),"\n",charToReplace);
-            String summary = replaceV2(test.getSummary(),"\n",charToReplace);
-            String description = replaceV2(test.getDescription(),"\n",charToReplace);
-            String manualTestSteps = replaceV2(test.getManualTestSteps(),"\n",charToReplace);
-            String assumptionsAndConstraints = replaceV2(test.getAssumptionsAndConstraints(),"\n",charToReplace);
-            String testInputs = replaceV2(test.getTestInputs(),"\n",charToReplace);
-            String conditions = replaceV2(test.getConditions(),"\n",charToReplace);
+             issueKey = replaceV2(test.getIssueKey(),"\n",charToReplace);
+             issueID = replaceV2(test.getIssueID(),"\n",charToReplace);
+             summary = replaceV2(test.getSummary(),"\n",charToReplace);
+             description = replaceV2(test.getDescription(),"\n",charToReplace);
+             manualTestSteps = replaceV2(test.getManualTestSteps(),"\n",charToReplace);
+             assumptionsAndConstraints = replaceV2(test.getAssumptionsAndConstraints(),"\n",charToReplace);
+             testInputs = replaceV2(test.getTestInputs(),"\n",charToReplace);
+             conditions = replaceV2(test.getConditions(),"\n",charToReplace);
 
             Test newTest = new Test();
             newTest.setIssueKey(issueKey);

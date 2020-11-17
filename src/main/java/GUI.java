@@ -602,6 +602,7 @@ public class GUI extends JFrame implements Runnable{
         version8Button.setSelected(true);
         jiraVersion = 8;
         version8Button.setEnabled(false);
+        version8Button.setVisible(false);
         /*version8Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
